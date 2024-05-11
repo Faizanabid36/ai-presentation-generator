@@ -4,7 +4,9 @@ import { IconDownload } from '@tabler/icons-react';
 
 export default function PresentationViewer(props) {
   const { presentation } = props;
-  let presentationUri = `${import.meta.env.VITE_API_URL}/export/pptx/${presentation._id}`;
+  let presentationUri = `${import.meta.env.VITE_API_URL}/export/pptx/${
+    presentation._id
+  }`;
 
   return (
     <>

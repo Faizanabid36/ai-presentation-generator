@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IconCheck, IconX, IconLoader2 } from '@tabler/icons-react';
+import { IconCheck, IconLoader2 } from '@tabler/icons-react';
 import axios from 'axios';
 import {
   Box,
@@ -7,7 +7,6 @@ import {
   BoxContent,
   IconContainer,
 } from '../../components/box.jsx';
-import { IconButton } from '../../components/buttons.jsx';
 
 export default function PresentationLoading(props) {
   const presentationIntro = props.presentation;

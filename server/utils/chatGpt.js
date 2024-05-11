@@ -8,7 +8,7 @@ const askChatGPT = async (
   frequency_penalty = 0
 ) => {
   const body = {
-    model: 'gpt-4',
+    model: 'gpt-3.5-turbo',
     messages: [{ role: 'system', content: input }],
     temperature,
     presence_penalty,
@@ -26,51 +26,51 @@ const askChatGPT = async (
 };
 
 const sectionTitle = async (title, amount) => {
-  while (true) {
-    let query = `You are a part of a complex and accurate presentation generator that handles section title generation. 
+  let query = `You are a part of a complex and accurate presentation generator that handles section title generation. 
     Respond in json format.
     Your response contains only one key called "title"
     Key "title" contains ${amount} title${
-      amount == 1 ? '' : 's'
-    } of a section for a presentation titled - "${title}"   
+    amount == 1 ? '' : 's'
+  } of a section for a presentation titled - "${title}"   
     Each title of a section should be unique but keeping the context of presentation.
 `;
-    let response = await askChatGPT(query, 1, 2, 0);
-    let { choices } = response;
-    console.log("FAIZAN", choices)
-    try {
-      let result = JSON.parse(choices[0]['message']['content']?.replaceAll('\n', '')).title;
-      if (typeof result == 'string') {
-        result = [result];
-      }
-      return result;
-    } catch (error) {
-      console.error(error, response);
-      console.log('Error, retrying');
+  let response = await askChatGPT(query, 1, 2, 0);
+  let { choices } = response;
+  console.log('FAIZAN', choices);
+  try {
+    let result = JSON.parse(
+      choices[0]['message']['content']?.replaceAll('\n', '')
+    ).title;
+    if (typeof result == 'string') {
+      result = [result];
     }
+    return result;
+  } catch (error) {
+    console.error(error, response);
+    console.log('Error, retrying');
   }
 };
 
 const slideTitle = async (title, presentation_title, amount) => {
-  while (true) {
-    let query = `You are a part of a complex and accurate presentation generator that handles section title generation. 
+  let query = `You are a part of a complex and accurate presentation generator that handles section title generation. 
     Respond in json format.
     Your response contains only one key called "title"
     Key "title" contains ${amount} title${
-      amount == 1 ? '' : 's'
-    } of a slide for a section titled - "${title}" and presentation titled - ${presentation_title}`;
-    let response = await askChatGPT(query, 1, 2, 0);
-    let { choices } = response;
-    try {
-      let result = JSON.parse(choices[0]['message']['content']?.replaceAll('\n', '')).title;
-      if (typeof result == 'string') {
-        result = [result];
-      }
-      return result;
-    } catch (error) {
-      console.error(error, response);
-      console.log('Error, retrying');
+    amount == 1 ? '' : 's'
+  } of a slide for a section titled - "${title}" and presentation titled - ${presentation_title}`;
+  let response = await askChatGPT(query, 1, 2, 0);
+  let { choices } = response;
+  try {
+    let result = JSON.parse(
+      choices[0]['message']['content']?.replaceAll('\n', '')
+    ).title;
+    if (typeof result == 'string') {
+      result = [result];
     }
+    return result;
+  } catch (error) {
+    console.error(error, response);
+    console.log('Error, retrying');
   }
 };
 
@@ -83,18 +83,18 @@ const slideContent = async (title, section_title) => {
   Key "content" is plain text of slide's content that you'll generate considering slide title - "${title}" and section's title - "${section_title}"
 
 `;
-  while (true) {
-    let response = await askChatGPT(query, 0.8, 0.8, 0.8);
-    let { choices } = response;
-    console.log(response);
-    try {
-      let result = JSON.parse(choices[0]['message']['content']?.replaceAll('\n', '')).content;
+  let response = await askChatGPT(query, 0.8, 0.8, 0.8);
+  let { choices } = response;
+  console.log(response);
+  try {
+    let result = JSON.parse(
+      choices[0]['message']['content']?.replaceAll('\n', '')
+    ).content;
 
-      return result;
-    } catch (error) {
-      console.error(error, response);
-      console.log('Error, retrying');
-    }
+    return result;
+  } catch (error) {
+    console.error(error, response);
+    console.log('Error, retrying');
   }
 };
 module.exports = { sectionTitle, slideTitle, slideContent };
